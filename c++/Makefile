@@ -41,13 +41,17 @@ LOG_FILE = ../out/log.txt
 LIBRARIES = -lgecodedriver -lgecodeflatzinc -lgecodefloat -lgecodeint -lgecodekernel -lgecodeminimodel \
 			-lgecodesearch -lgecodeset -lgecodesupport
 
+# Define Gecode Paths at the Top of the Makefile:
+GECODE_INCLUDE_DIR = /opt/homebrew/opt/gecode/include
+GECODE_LIB_DIR = /opt/homebrew/opt/gecode/lib
+
 dylib:
-	g++ $(PROBLEM_FILES) $(MIDI_FILES) -std=c++11 -dynamiclib -fPIC -F/Library/Frameworks -framework gecode -o ../out/diatony.dylib
+	g++ $(PROBLEM_FILES) $(MIDI_FILES) -std=c++11 -arch arm64 -dynamiclib -fPIC -I$(GECODE_INCLUDE_DIR) -L$(GECODE_LIB_DIR) $(LIBRARIES) -o ../out/diatony.dylib
 	install_name_tool -change gecode.framework/Versions/49/gecode /Library/Frameworks/gecode.framework/Versions/49/gecode ../out/diatony.dylib
 
 #compile all files and generate executable
 compile:
-	g++ -std=c++11 -F/Library/Frameworks -framework gecode -o ../out/Main $(PROBLEM_FILES) $(MIDI_FILES) src/Main.cpp
+	g++ -std=c++11 -arch arm64 -I$(GECODE_INCLUDE_DIR) -L$(GECODE_LIB_DIR) $(LIBRARIES) -o ../out/Main $(PROBLEM_FILES) $(MIDI_FILES) src/Main.cpp
 	install_name_tool -change gecode.framework/Versions/49/gecode /Library/Frameworks/gecode.framework/Versions/49/gecode ../out/Main
 
 #generate the midifile for the best solution
