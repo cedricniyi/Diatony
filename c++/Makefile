@@ -47,12 +47,13 @@ GECODE_LIB_DIR = /opt/homebrew/opt/gecode/lib
 
 dylib:
 	g++ $(PROBLEM_FILES) $(MIDI_FILES) -std=c++11 -arch arm64 -dynamiclib -fPIC -I$(GECODE_INCLUDE_DIR) -L$(GECODE_LIB_DIR) $(LIBRARIES) -o ../out/diatony.dylib
-	install_name_tool -change gecode.framework/Versions/49/gecode /Library/Frameworks/gecode.framework/Versions/49/gecode ../out/diatony.dylib
+	install_name_tool -id "@rpath/diatony.dylib" ../out/diatony.dylib
+	# install_name_tool -change gecode.framework/Versions/49/gecode /Library/Frameworks/gecode.framework/Versions/49/gecode ../out/diatony.dylib
 
 #compile all files and generate executable
 compile: clean
 	g++ -std=c++11 -arch arm64 -I$(GECODE_INCLUDE_DIR) -L$(GECODE_LIB_DIR) $(LIBRARIES) -o ../out/Main $(PROBLEM_FILES) $(MIDI_FILES) src/Main.cpp
-	install_name_tool -change gecode.framework/Versions/49/gecode /Library/Frameworks/gecode.framework/Versions/49/gecode ../out/Main
+	# install_name_tool -change gecode.framework/Versions/49/gecode /Library/Frameworks/gecode.framework/Versions/49/gecode ../out/Main
 
 #generate the midifile for the best solution
 midifile: clean compile
