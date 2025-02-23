@@ -45,7 +45,10 @@ void writeSolToMIDIFile(int size, const string& fileName, const FourVoiceTexture
         }
     }
     outputFile.sortTracks(); // make sure data is in correct order
-    outputFile.write(fileName + ".mid");
+    
+    std::string fullPath = fileName;
+    std::cout << "(MidiFileGeneration.cpp) Chemin du fichier MIDI : " << fullPath << std::endl;
+    outputFile.write(fullPath);
 }
 
 /**
