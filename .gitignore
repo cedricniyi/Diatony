@@ -25,3 +25,6 @@ c++/gecode.framework
 
 *.mid
 efficiency_measurment/TestCases.txt
+
+diatony.dylib
+
