@@ -46,7 +46,8 @@ GECODE_INCLUDE_DIR = /opt/homebrew/opt/gecode/include
 GECODE_LIB_DIR = /opt/homebrew/opt/gecode/lib
 
 dylib:
-	g++ $(PROBLEM_FILES) $(MIDI_FILES) -std=c++11 -arch arm64 -dynamiclib -fPIC -I$(GECODE_INCLUDE_DIR) -L$(GECODE_LIB_DIR) $(LIBRARIES) -o ../out/diatony.dylib
+	g++ $(PROBLEM_FILES) $(MIDI_FILES) -std=c++11 -arch arm64 -dynamiclib -fPIC -I$(GECODE_INCLUDE_DIR) -L$(GECODE_LIB_DIR) $(LIBRARIES)  -o ../out/diatony.dylib
+	# g++ $(PROBLEM_FILES) $(MIDI_FILES) -std=c++11 -arch arm64 -dynamiclib -fPIC -fsanitize=address -I$(GECODE_INCLUDE_DIR) -L$(GECODE_LIB_DIR) $(LIBRARIES) -fsanitize=address -o ../out/diatony.dylib
 	install_name_tool -id "@rpath/diatony.dylib" ../out/diatony.dylib
 	# install_name_tool -change gecode.framework/Versions/49/gecode /Library/Frameworks/gecode.framework/Versions/49/gecode ../out/diatony.dylib
 
